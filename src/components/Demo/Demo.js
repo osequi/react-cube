@@ -7,15 +7,14 @@ import shortid from "shortid";
 /**
  * Imports other components and hooks
  */
-import Cube from "../Cube";
-import useControls, {
-  useControlsPropTypes,
-} from "@bit/osequi.test.use-controls";
+import Cube, { CubePropTypes, CubeDefaultProps } from "../Cube";
+import useControls, { useControlsPropTypes } from "../../use-controls";
 
 /**
  * Defines the prop types
  */
 const propTypes = {
+  cube: PropTypes.shape(CubePropTypes),
   controls: PropTypes.shape(useControlsPropTypes),
 };
 
@@ -23,6 +22,7 @@ const propTypes = {
  * Defines the default props
  */
 const defaultProps = {
+  cube: CubeDefaultProps,
   controls: {
     items: [
       {
@@ -48,15 +48,49 @@ const defaultProps = {
 };
 
 /**
+ * Updates the Controls with values.
+ * - Since `controls` use `shortid.generate()` they can't be defined together with `values` which change. This would cause endless re-renders
+ * - Therefore, first, `controls` are defined with `shortid` as static props.
+ * - Then they are updated with dynamic values.
+ */
+const updateControls = (props) => {
+  const { cube, controls } = props;
+  const { items } = controls;
+  const { container } = cube;
+  const { isPerspectiveOn, perspective, perspectiveOrigin } = container;
+
+  const items2 =
+    items &&
+    items.map((item) => {
+      const { label } = item;
+
+      if (label === "Use perspective") {
+        return { ...item, value: isPerspectiveOn };
+      }
+
+      if (label === "Set perspective") {
+        return { ...item, value: perspective };
+      }
+
+      if (label === "Set perspective origin") {
+        return { ...item, value: perspectiveOrigin };
+      }
+
+      return item;
+    });
+
+  return { ...controls, items: items2 };
+};
+
+/**
  * Displays the component
  */
 const Demo = (props) => {
-  const { controls } = props;
   /**
    * Loads the controls
    */
-  //const controls = updateControls(props);
-  const [values, form] = useControls(controls);
+  const controls = updateControls(props);
+  const { values, form } = useControls(controls);
 
   return (
     <div className="Demo">
