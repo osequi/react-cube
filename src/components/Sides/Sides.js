@@ -5,7 +5,7 @@ import shortid from "shortid";
 /**
  * Imports other components and hooks
  */
-import Side, { SidePropTypes, SideDefaultProps } from "../Side";
+import Side, { SidePropTypes, SideDefaultProps, sideNames } from "../Side";
 
 /**
  * Defines the prop types
@@ -20,8 +20,8 @@ const propTypes = {
 const defaultProps = {
   sides: Array(6)
     .fill(SideDefaultProps)
-    .map((item) => {
-      return { ...item, id: shortid.generate() };
+    .map((item, index) => {
+      return { ...item, id: shortid.generate(), name: sideNames[index] };
     }),
 };
 

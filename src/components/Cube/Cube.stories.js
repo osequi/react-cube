@@ -1,9 +1,11 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
-
 import Cube from "./Cube";
-import description from "./Cube.md";
 
-storiesOf("Cube", module).add("Overview", () => <Cube />, {
-  notes: { markdown: description }
-});
+export default {
+  component: Cube,
+  title: "Cube",
+};
+
+const Template = (args) => <Cube {...args} />;
+
+export const Default = Template.bind({});

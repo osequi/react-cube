@@ -12,10 +12,15 @@ const propTypes = {
   id: PropTypes.string,
   name: PropTypes.oneOf(names),
   content: PropTypes.any,
+  width: PropTypes.string,
+  height: PropTypes.string,
   className: PropTypes.string,
   opacity: PropTypes.number,
-  width: PropTypes.string,
-  height: PropTypes.height,
+  border: PropTypes.string,
+  parent: PropTypes.shape({
+    width: PropTypes.string,
+    height: PropTypes.string,
+  }),
 };
 
 /**
@@ -25,10 +30,15 @@ const defaultProps = {
   id: "front",
   name: "front",
   content: null,
+  width: "100%",
+  height: "100%",
   className: "Side",
   opacity: 0.9,
-  width: null,
-  height: null,
+  border: "1px solid",
+  parent: {
+    width: "100px",
+    height: "100px",
+  },
 };
 
 /**
@@ -37,39 +47,39 @@ const defaultProps = {
 const useStyles = makeStyles((theme) => ({
   side: (props) => ({
     position: "absolute",
-    width: "100%",
-    height: "100%",
-    border: "1px solid",
+    width: props.width,
+    height: props.height,
+    border: props.border,
     opacity: props.opacity,
   }),
 
   front: (props) => ({
-    transform: `translateZ(calc(${props.width} / 2))`,
+    transform: `translateZ(calc(${props.parent.width} / 2))`,
   }),
 
   back: (props) => ({
-    transform: `translateZ(calc(-${props.width} / 2))`,
+    transform: `translateZ(calc(-${props.parent.width} / 2))`,
   }),
 
   left: (props) => ({
-    transform: `rotateY(90deg) translateZ(calc(${props.width} / 2))`,
+    transform: `rotateY(90deg) translateZ(calc(${props.parent.width} / 2))`,
   }),
 
   right: (props) => ({
-    transform: `rotateY(-90deg) translateZ(calc(${props.width} / 2))`,
+    transform: `rotateY(-90deg) translateZ(calc(${props.parent.width} / 2))`,
   }),
 
   top: (props) => ({
-    transform: `rotateX(90deg) translateZ(calc(${props.width} / 2))`,
+    transform: `rotateX(90deg) translateZ(calc(${props.parent.width} / 2))`,
   }),
 
   bottom: (props) => ({
-    transform: `rotateX(-90deg) translateZ(calc(${props.width} / 2))`,
+    transform: `rotateX(-90deg) translateZ(calc(${props.parent.width} / 2))`,
   }),
 }));
 
 /**
- * Displays the component
+ * Displays a side of the cube
  */
 const Side = (props) => {
   const { name, className, content } = props;
@@ -90,4 +100,8 @@ Side.propTypes = propTypes;
 Side.defaultProps = defaultProps;
 
 export default Side;
-export { propTypes as SidePropTypes, defaultProps as SideDefaultProps };
+export {
+  propTypes as SidePropTypes,
+  defaultProps as SideDefaultProps,
+  names as sideNames,
+};

@@ -13,7 +13,7 @@ import Sides, { SidesPropTypes, SidesDefaultProps } from "../Sides";
  */
 const propTypes = {
   width: PropTypes.string,
-  height: PropTypes.height,
+  height: PropTypes.string,
   transformStyle: PropTypes.oneOf(["preserve-3d", "flat"]),
   className: PropTypes.string,
   sides: PropTypes.shape(SidesPropTypes),
@@ -35,7 +35,7 @@ const defaultProps = {
   height: "200px",
   transformStyle: "preserve-3d",
   className: "Cube",
-  sides: SidesPropTypes,
+  sides: SidesDefaultProps,
   container: {
     width: "400px",
     height: "400px",
@@ -80,12 +80,12 @@ const Cube = (props) => {
   const { className, sides, container } = props;
   const { className: containerClassName } = container;
 
-  const { cubeKlass, containerKlass } = useStyles(props);
+  const { cube: cubeKlass, container: containerKlass } = useStyles(props);
 
   return (
     <div className={clsx(containerClassName, containerKlass)}>
       <div className={clsx(className, cubeKlass)}>
-        <Sides sides={sides} />
+        <Sides {...sides} />
       </div>
     </div>
   );

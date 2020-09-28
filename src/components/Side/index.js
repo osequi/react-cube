@@ -1,1 +1,1 @@
-export { default, SidePropTypes, SideDefaultProps } from "./Side";
+export { default, SidePropTypes, SideDefaultProps, sideNames } from "./Side";
