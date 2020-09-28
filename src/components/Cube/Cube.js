@@ -15,6 +15,14 @@ const propTypes = {
   transformStyle: PropTypes.oneOf(["preserve-3d", "flat"]),
   className: PropTypes.string,
   sides: PropTypes.shape(SidesPropTypes),
+  container: PropTypes.shape({
+    width: PropTypes.string,
+    height: PropTypes.height,
+    perspective: PropTypes.string,
+    perspectiveOrigin: PropTypes.string,
+    isPerspectiveOn: PropTypes.bool,
+    className: PropTypes.string,
+  }),
 };
 
 /**
@@ -26,6 +34,14 @@ const defaultProps = {
   transformStyle: "preserve-3d",
   className: "Cube",
   sides: SidesPropTypes,
+  container: {
+    width: "400px",
+    height: "400px",
+    perspective: "800px",
+    perspectiveOrigin: "top right",
+    isPerspectiveOn: true,
+    className: "CubeContainer",
+  },
 };
 
 /**
@@ -38,17 +54,37 @@ const useStyles = makeStyles((theme) => ({
     transformStyle: props.transformStyle,
     position: "relative",
   }),
+
+  container: (props) => ({
+    width: props.container.width,
+    height: props.container.height,
+    perspective: props.container.isPerspectiveOn
+      ? props.container.perspective
+      : "none",
+    perspectiveOrigin: props.container.perspectiveOrigin,
+
+    border: "1px solid",
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
 }));
+
 /**
  * Displays the component
  */
 const Cube = (props) => {
-  const { className, sides } = props;
-  const { cube } = useStyles(props);
+  const { className, sides, container } = props;
+  const { className: containerClassName } = container;
+
+  const { cubeKlass, containerKlass } = useStyles(props);
 
   return (
-    <div className={clsx(className, cube)}>
-      <Sides sides={sides} />
+    <div className={clsx(containerClassName, containerKlass)}>
+      <div className={clsx(className, cubeKlass)}>
+        <Sides sides={sides} />
+      </div>
     </div>
   );
 };
