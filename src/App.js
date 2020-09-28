@@ -1,6 +1,6 @@
 import React from "react";
-import Cube from "./components/Cube";
+import Demo from "./components/Demo";
 
-const App = () => <Cube />;
+const App = () => <Demo />;
 
 export default App;
