@@ -1,9 +1,11 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
-
 import Side from "./Side";
-import description from "./Side.md";
 
-storiesOf("Side", module).add("Overview", () => <Side />, {
-  notes: { markdown: description }
-});
+export default {
+  component: Side,
+  title: "Side",
+};
+
+const Template = (args) => <Side {...args} />;
+
+export const Default = Template.bind({});
