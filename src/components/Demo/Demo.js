@@ -83,9 +83,21 @@ const updateControls = (props) => {
 };
 
 /**
+ * Defines the styles
+ */
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+}));
+
+/**
  * Displays the component
  */
 const Demo = (props) => {
+  const { container } = useStyles(props);
+
   /**
    * Loads the controls
    */
@@ -93,7 +105,7 @@ const Demo = (props) => {
   const { values, form } = useControls(controls);
 
   return (
-    <div className="Demo">
+    <div className={clsx("Demo", container)}>
       <Cube />
       <div className={clsx("Controls")}>{form}</div>
     </div>
