@@ -36,8 +36,8 @@ const defaultProps = {
   opacity: 0.9,
   border: "1px solid",
   parent: {
-    width: "100px",
-    height: "100px",
+    width: "200px",
+    height: "200px",
   },
 };
 
