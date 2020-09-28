@@ -1,27 +1,56 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+
+/**
+ * Imports other components and hooks
+ */
+import Sides, { SidesPropTypes, SidesDefaultProps } from "../Sides";
 
 /**
  * Defines the prop types
  */
-const propTypes = {};
+const propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.height,
+  transformStyle: PropTypes.oneOf(["preserve-3d", "flat"]),
+  className: PropTypes.string,
+  sides: PropTypes.shape(SidesPropTypes),
+};
 
 /**
  * Defines the default props
  */
-const defaultProps = {};
+const defaultProps = {
+  width: "200px",
+  height: "200px",
+  transformStyle: "preserve-3d",
+  className: "Cube",
+  sides: SidesPropTypes,
+};
 
 /**
- * Styles the component container
+ * Defines the styles
  */
-const Container = styled("div")(props => ({}));
-
+const useStyles = makeStyles((theme) => ({
+  cube: (props) => ({
+    width: props.width,
+    height: props.height,
+    transformStyle: props.transformStyle,
+    position: "relative",
+  }),
+}));
 /**
  * Displays the component
  */
-const Cube = props => {
-  return <Container className="Cube">Cube</Container>;
+const Cube = (props) => {
+  const { className, sides } = props;
+  const { cube } = useStyles(props);
+
+  return (
+    <div className={clsx(className, cube)}>
+      <Sides sides={sides} />
+    </div>
+  );
 };
 
 Cube.propTypes = propTypes;
