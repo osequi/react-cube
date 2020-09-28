@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 const Cube = (props) => {
   const { className, sides, container } = props;
   const { className: containerClassName } = container;
+  console.log("containerClassName:", containerClassName);
 
   const { cube: cubeKlass, container: containerKlass } = useStyles(props);
 
